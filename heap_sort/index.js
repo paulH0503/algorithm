@@ -159,7 +159,7 @@ var heapSort = (function(array){
     getNodes,
     sort
   }
-})([4, 10, 3, 5, 1, 100,23 ,35,1 ,2,3 ,4]);
+})([4, 10, 3, 5, 1, 100, 23, 35, 1, 2, 3, 4]);
 
 
 heapSort.generateNode().maxHeap();
