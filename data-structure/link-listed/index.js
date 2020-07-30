@@ -40,6 +40,18 @@ class LinkListed {
       new Error("heap is not a node");
     }
     this._head = heap;
+
+  }
+
+  deleteNode(node) {
+    if (node instanceof nodeLink) {
+      const prev = node.prev;
+      const next = node.next;
+      prev.next = next;
+      next.prev = prev;
+    } else {
+      console.log("errrrr");
+    }
   }
 
   get heap() {
@@ -63,5 +75,8 @@ node2.prev = node1;
 
 const linkListed = new LinkListed(node2);
 
+linkListed.deleteNode(node3)
+
 console.log(linkListed.heap.next.data);
 console.log(linkListed.heap.prev.data);
+
