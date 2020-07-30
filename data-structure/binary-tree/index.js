@@ -36,7 +36,11 @@ ob.fire({ event: events.UPDATE_NODE_LISTS, data: nodesProxy });
 
 nodesProxy.node5.left = nodesProxy.node0;
 nodesProxy.node5.right = nodesProxy.node2;
+
 console.log(nodesProxy.node5.left.data)
+// 5
+console.log(nodesProxy.node5.right.data)
+// 2
 
 
 
