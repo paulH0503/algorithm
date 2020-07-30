@@ -20,6 +20,6 @@ var binarySearch = (function(array) {
     }
   }
   return findBinarySearch(array, 0, array.length);
-})([2, 5, 8, 12, 16, 23, 38, 58, 72, 91, 4, 5, 213, 123].sort((a, b) => a - b));
+})([2, 5, 8, 12, 16, 23, 38, 58, 454, 72, 91, 4, 5, 213, 123].sort((a, b) => a - b));
 
 console.log(binarySearch);
