@@ -70,7 +70,7 @@ function algorithm(array) {
   }
 }
 
-var a = algorithm([[0,0,0], [0,0,0], [0,0,0]]);
+var a = algorithm([[1,1,0], [1,0,0], [0,1,1]]);
 
 console.log(a.init().findMaxNeighbour());
 

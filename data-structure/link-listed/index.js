@@ -1,82 +1,125 @@
 class nodeLink {
   constructor(data) {
-    this._nodePrev = null;
-    this._nodeNext = null;
     this._data = data;
-  }
-
-  set next(node) {
-    this._nodeNext = node;
-  }
-
-  set prev(node) {
-    this._nodePrev = node;
-  }
-
-  get next() {
-    if (!this._nodeNext) {
-      return "Not already link to node";
-    }
-    return this._nodeNext;
-  }
-
-  get prev() {
-    if (!this._nodePrev) {
-      return "Not already link to node";
-    }
-    return this._nodePrev;
+    this._next = null;
   }
 
   get data() {
     return this._data;
   }
+
+  set next(node) {
+    if (node instanceof nodeLink) {
+      this._next = node;
+    }
+  }
+
+  get next() {
+    return this._next;
+  }
 }
 
 class LinkListed {
-  constructor(heap) {
-    if (heap instanceof nodeLink) {
-
-    } else {
-      new Error("heap is not a node");
-    }
-    this._head = heap;
-
+  constructor() {
+    this._heap = null;
+    this._tail = null;
   }
 
-  deleteNode(node) {
-    if (node instanceof nodeLink) {
-      const prev = node.prev;
-      const next = node.next;
-      prev.next = next;
-      next.prev = prev;
+  append(value) {
+    const node = new nodeLink(value);
+    if (!(this.heap instanceof nodeLink)) {
+      this._heap = node;
+      this._tail = node;
     } else {
-      console.log("errrrr");
+      this._tail.next = node;
+      this._tail = node;
+    }
+  }
+
+  prepend(value) {
+    const node = new nodeLink(value);
+    node.next = this.heap;
+    this._heap = node;
+    if (!this._tail) {
+      this._tail = node;
+    }
+
+  }
+  
+  search(value) {
+    let curNode = this.heap
+    while((curNode instanceof nodeLink) && curNode.data !== value) {
+      curNode = curNode.next;
+    }
+    if (!curNode) {
+      return false;
+    } else {
+      return curNode;
+    }
+  }
+
+  delete(value) {
+    if (!(this.heap instanceof nodeLink)) {
+      return false;
+    } else {
+      if (this.heap.data === value) {
+        if (!this.heap.next && !this.tail.next) {
+            this._heap = null;
+            this._tail = null;
+        } else {
+          this.heap = this.heap.next;
+        }
+        return true;
+      }
+
+      let currentNode = this.heap;
+      let prevNode;
+      while((currentNode instanceof nodeLink) && currentNode.data !== value) {
+        prevNode = currentNode;
+        currentNode = currentNode.next;
+      }
+      
+      if (prevNode instanceof nodeLink && currentNode.next instanceof nodeLink) {
+        prevNode.next = currentNode.next;
+        return true;
+      } else {
+        console.log("errorrrrr");
+        return false;
+      }
+
     }
   }
 
   get heap() {
-    return this._head;
+    return this._heap;
+  }
+
+  get tail() {
+    return this._tail;
   }
 }
 
+const linkListed = new LinkListed();
+linkListed.append(1);
+linkListed.append(2);
+linkListed.append(3);
+linkListed.append(4);
+linkListed.prepend(5);
+/**
+ * 5 (head) -> 1 -> 2 -> 3 -> 4 (tail)
+ */
 
-const node1 = new nodeLink(1);
-const node2 = new nodeLink(2);
-const node3 = new nodeLink(3);
-const node4 = new nodeLink(4);
+console.log(linkListed.search(2).next);
+/**
+ * nodeLink { _data: 3, _next: nodeLink { _data: 4, _next: null } }
+ */
 
-node1.next = node2;
-node2.next = node3;
-node3.next = node4;
+console.log(linkListed.search(3).next);
+/**
+ * nodeLink { _data: 4, _next: null }
+ */
 
-node4.prev = node3;
-node3.prev = node2;
-node2.prev = node1;
-
-const linkListed = new LinkListed(node2);
-
-linkListed.deleteNode(node3)
-
-console.log(linkListed.heap.next.data);
-console.log(linkListed.heap.prev.data);
-
+console.log(linkListed.delete(3));
+/**
+ * nodeLink { _data: 2, _next: nodeLink { _data: 4, _next: null } }
+ */
